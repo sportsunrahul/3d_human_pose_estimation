@@ -1,16 +1,3 @@
-# Towards 3D Human Pose Estimation in the Wild: a Weakly-supervised Approach
-
-This repository is the PyTorch implementation for the network presented in:
-
-> Xingyi Zhou, Qixing Huang, Xiao Sun, Xiangyang Xue, Yichen Wei, 
-> **Towards 3D Human Pose Estimation in the Wild: a Weakly-supervised Approach**
-> ICCV 2017 ([arXiv:1704.02447](https://arxiv.org/abs/1704.02447))
-
-<p align="center"> 
-  <img src="teaser.png" width="350"/>
-</p>
-
-
 ## Installation
 The code was tested with [Anaconda](https://www.anaconda.com/download) Python 3.6 and [PyTorch]((http://pytorch.org/)) v0.4.1. After install Anaconda and Pytorch:
 
@@ -44,7 +31,7 @@ The code was tested with [Anaconda](https://www.anaconda.com/download) Python 3.
     ~~~
 
 ## Demo
-- Download our pre-trained [model](https://drive.google.com/open?id=1_2CCb_qsA1egT5c2s0ABuW3rQCDOLvPq) and move it to `models`.
+- Download our pre-trained [model](https://drive.google.com/file/d/1Ud2x79tdKX1VHk17dkPHqk_S7WIA4tXp/view?usp=sharing) and move it to `models`.
 - Run `python demo.py --demo /path/to/image/or/image/folder [--gpus -1] [--load_model /path/to/model]`. 
 
 `--gpus -1` is for CPU mode. 
