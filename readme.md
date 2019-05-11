@@ -1,11 +1,10 @@
 ## Installation
-The code was tested with [Anaconda](https://www.anaconda.com/download) Python 3.6 and [PyTorch]((http://pytorch.org/)) v0.4.1. After install Anaconda and Pytorch:
+The code was tested with [Anaconda](https://www.anaconda.com/download) Python 3.6 and [PyTorch]((http://pytorch.org/)) v1.0.1. After installing Anaconda and Pytorch:
 
-1. Clone the repo:
+1. Clone the repo or use the source code provided:
 
     ~~~
-    POSE_ROOT=/path/to/clone/pytorch-pose-hg-3d
-    git clone https://github.com/xingyizhou/pytorch-pose-hg-3d POSE_ROOT
+    git clone https://github.com/sportsunrahul/3d_human_pose_estimation.git
     ~~~
 
 
@@ -15,16 +14,8 @@ The code was tested with [Anaconda](https://www.anaconda.com/download) Python 3.
     conda install --channel https://conda.anaconda.org/menpo opencv
     conda install --channel https://conda.anaconda.org/auto progress
     ~~~
-3. Disable cudnn for batch_norm (see [issue](https://github.com/xingyizhou/pytorch-pose-hg-3d/issues/16)):
-    
-    ~~~
-    # PYTORCH=/path/to/pytorch
-    # for pytorch v0.4.0
-    sed -i "1194s/torch\.backends\.cudnn\.enabled/False/g" ${PYTORCH}/torch/nn/functional.py
-    # for pytorch v0.4.1
-    sed -i "1254s/torch\.backends\.cudnn\.enabled/False/g" ${PYTORCH}/torch/nn/functional.py
-    ~~~
-4. Optionally, install tensorboard for visializing training. 
+
+3. Optionally, install tensorboard for visializing training. 
 
     ~~~
     pip install tensorflow
@@ -44,7 +35,7 @@ To test our model on Human3.6 dataset run
 python main.py --exp_id test --task human3d --dataset fusion_3d --load_model ../models/fusion_3d_var.pth --test --full_test
 ~~~
 
-The expected results should be 64.55mm.
+The expected results are 64.19mm.
 
 ## Training
 - Prepare the training data:
@@ -74,19 +65,19 @@ The expected results should be 64.55mm.
                       |-- HM36_eccv_challenge_Val_w288xh384_keypoint_jnt_bbox_db.pkl
   ```
 
-- Stage1: Train 2D pose only. [model](https://drive.google.com/open?id=1WqW1-_gCyGTB80m9MK_KUoD0dtElEQzv), [log](https://drive.google.com/open?id=1yKwmGD4MURHnDD5536niPjxe-keY3HGs)
+- Stage1: Train 2D pose only.
 
 ```
 python main.py --exp_id mpii
 ```
 
-- Stage2: Train on 2D and 3D data without geometry loss (drop LR at 45 epochs). [model](https://drive.google.com/open?id=13d3AqzA85TSO7o1F8aq_ptnAkJ7LSp9-), [log](https://drive.google.com/open?id=18B_aOM9djCHZFlB0Rcoa6zOK1eXvsmRl)
+- Stage2: Train on 2D and 3D data without geometry loss (drop LR at 45 epochs). 
 
 ```
 python main.py --exp_id fusion_3d --task human3d --dataset fusion_3d --ratio_3d 1 --weight_3d 0.1 --load_model ../exp/mpii/model_last.pth --num_epoch 60 --lr_step 45
 ```
 
-- Stage3: Train with geometry loss. [model](https://drive.google.com/open?id=1_2CCb_qsA1egT5c2s0ABuW3rQCDOLvPq), [log](https://drive.google.com/open?id=1hV4V74lTUd3COnoe1XMiTb8EUcyI8obN)
+- Stage3: Train with geometry loss.
 
 ```
 python main.py --exp_id fusion_3d_var --task human3d --dataset fusion_3d --ratio_3d 1 --weight_3d 0.1 --weight_var 0.01 --load_model ../models/fusion_3d.pth  --num_epoch 10 --lr 1e-4
